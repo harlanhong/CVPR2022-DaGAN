@@ -17,7 +17,8 @@ from modules.keypoint_detector import KPDetector
 from animate import normalize_kp
 from scipy.spatial import ConvexHull
 from collections import OrderedDict
-
+import pdb
+import cv2
 if sys.version_info[0] < 3:
     raise Exception("You must use Python 3 or higher. Recommended version is Python 3.7")
 
@@ -63,43 +64,49 @@ def make_animation(source_image, driving_video, generator, kp_detector, relative
         predictions = []
         depth_gray = []
         source = torch.tensor(source_image[np.newaxis].astype(np.float32)).permute(0, 3, 1, 2)
+        driving = torch.tensor(np.array(driving_video)[np.newaxis].astype(np.float32)).permute(0, 4, 1, 2, 3)
         if not cpu:
             source = source.cuda()
-        driving = torch.tensor(np.array(driving_video)[np.newaxis].astype(np.float32)).permute(0, 4, 1, 2, 3).cuda()
-
+            driving = driving.cuda()
         outputs = depth_decoder(depth_encoder(source))
         depth_source = outputs[("disp", 0)]
+
         outputs = depth_decoder(depth_encoder(driving[:, :, 0]))
-        depth_driving_initial = outputs[("disp", 0)]
+        depth_driving = outputs[("disp", 0)]
+        source_kp = torch.cat((source,depth_source),1)
+        driving_kp = torch.cat((driving[:, :, 0],depth_driving),1)
+       
+        kp_source = kp_detector(source_kp)
+        kp_driving_initial = kp_detector(driving_kp) 
 
-        source_rgbd = torch.cat((source,depth_source),1)
-        driving_inital_rgbd = torch.cat((driving[:, :, 0], depth_driving_initial),1)
-        kp_source = kp_detector(source_rgbd)
-        kp_driving_initial = kp_detector(driving_inital_rgbd) 
-
+        # kp_source = kp_detector(source)
+        # kp_driving_initial = kp_detector(driving[:, :, 0])
 
         for frame_idx in tqdm(range(driving.shape[2])):
             driving_frame = driving[:, :, frame_idx]
+
             if not cpu:
                 driving_frame = driving_frame.cuda()
             outputs = depth_decoder(depth_encoder(driving_frame))
-            driving_depth = outputs[("disp", 0)]
+            depth_map = outputs[("disp", 0)]
 
-            gray_driving = np.transpose(driving_depth.data.cpu().numpy(), [0, 2, 3, 1])[0]
+            gray_driving = np.transpose(depth_map.data.cpu().numpy(), [0, 2, 3, 1])[0]
             gray_driving = 1-gray_driving/np.max(gray_driving)
 
-            frame_rgbd = torch.cat((driving_frame,driving_depth),1)
-            kp_driving = kp_detector(frame_rgbd)
+            frame = torch.cat((driving_frame,depth_map),1)
+            kp_driving = kp_detector(frame)
+
             kp_norm = normalize_kp(kp_source=kp_source, kp_driving=kp_driving,
                                    kp_driving_initial=kp_driving_initial, use_relative_movement=relative,
                                    use_relative_jacobian=relative, adapt_movement_scale=adapt_movement_scale)
-            out = generator(source, kp_source=kp_source, kp_driving=kp_norm,source_depth = depth_source, driving_depth = driving_depth)
+            out = generator(source, kp_source=kp_source, kp_driving=kp_norm,source_depth = depth_source, driving_depth = depth_map)
+
             drivings.append(np.transpose(driving_frame.data.cpu().numpy(), [0, 2, 3, 1])[0])
             sources.append(np.transpose(source.data.cpu().numpy(), [0, 2, 3, 1])[0])
             predictions.append(np.transpose(out['prediction'].data.cpu().numpy(), [0, 2, 3, 1])[0])
             depth_gray.append(gray_driving)
-
     return sources, drivings, predictions,depth_gray
+
 
 def find_best_frame(source, driving, cpu=False):
     import face_alignment
@@ -154,16 +161,20 @@ if __name__ == "__main__":
     parser.set_defaults(adapt_scale=False)
 
     opt = parser.parse_args()
-    depth_encoder = depth.ResnetEncoder(18, False).cuda()
-    depth_decoder = depth.DepthDecoder(num_ch_enc=depth_encoder.num_ch_enc, scales=range(4)).cuda()
-    loaded_dict_enc = torch.load('depth/models/weights_19/encoder.pth')
-    loaded_dict_dec = torch.load('depth/models/weights_19/depth.pth')
+
+    depth_encoder = depth.ResnetEncoder(18, False)
+    depth_decoder = depth.DepthDecoder(num_ch_enc=depth_encoder.num_ch_enc, scales=range(4))
+    loaded_dict_enc = torch.load('/data/fhongac/workspace/src/DaGAN/depth/models/weights_19/encoder.pth')
+    loaded_dict_dec = torch.load('/data/fhongac/workspace/src/DaGAN/depth/models/weights_19/depth.pth')
     filtered_dict_enc = {k: v for k, v in loaded_dict_enc.items() if k in depth_encoder.state_dict()}
     depth_encoder.load_state_dict(filtered_dict_enc)
     depth_decoder.load_state_dict(loaded_dict_dec)
     depth_encoder.eval()
     depth_decoder.eval()
-    
+    if not opt.cpu:
+        depth_encoder.cuda()
+        depth_decoder.cuda()
+
     source_image = imageio.imread(opt.source_image)
     reader = imageio.get_reader(opt.driving_video)
     fps = reader.get_meta_data()['fps']
@@ -184,24 +195,27 @@ if __name__ == "__main__":
         print ("Best frame: " + str(i))
         driving_forward = driving_video[i:]
         driving_backward = driving_video[:(i+1)][::-1]
-        sources_forward, drivings_forward, predictions_forward,depth_backward = make_animation(source_image, driving_forward, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
-        sources_backward, drivings_backward, predictions_backward,depth_forward = make_animation(source_image, driving_backward, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
+        sources_forward, drivings_forward, predictions_forward,depth_forward = make_animation(source_image, driving_forward, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
+        sources_backward, drivings_backward, predictions_backward,depth_backward = make_animation(source_image, driving_backward, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
         predictions = predictions_backward[::-1] + predictions_forward[1:]
         sources = sources_backward[::-1] + sources_forward[1:]
         drivings = drivings_backward[::-1] + drivings_forward[1:]
         depth_gray = depth_backward[::-1] + depth_forward[1:]
 
     else:
-        predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
+        # predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
         sources, drivings, predictions,depth_gray = make_animation(source_image, driving_video, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
     imageio.mimsave(opt.result_video, [np.concatenate((img_as_ubyte(s),img_as_ubyte(d),img_as_ubyte(p)),1) for (s,d,p) in zip(sources, drivings, predictions)], fps=fps)
-
     imageio.mimsave("gray.mp4", depth_gray, fps=fps)
     # merge the gray video
     animation = np.array(imageio.mimread(opt.result_video,memtest=False))
     gray = np.array(imageio.mimread("gray.mp4",memtest=False))
+
     src_dst = animation[:,:,:512,:]
     animate = animation[:,:,512:,:]
     merge = np.concatenate((src_dst,gray,animate),2)
     imageio.mimsave(opt.result_video, merge, fps=fps)
-   
+    #Transfer to gif
+    # from moviepy.editor import *
+    # clip = (VideoFileClip(opt.result_video))
+    # clip.write_gif("{}.gif".format(opt.result_video))
