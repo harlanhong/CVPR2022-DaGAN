@@ -1,7 +1,7 @@
 
 ## :book: Depth-Aware Generative Adversarial Network for Talking Head Video Generation (CVPR 2022)
 <p align="center">
-  <small>:fire: If DaGAN is helpful in your photos/projects, please help to :star: this repo or recommend it to your friends. Thanks :fire:</small>
+  <small>:fire: If DaGAN is helpful in your photos/projects, please help to :star: this repo or recommend it to your friends. Thanks</small>
 </p>
 
 > [[Paper](https://arxiv.org/abs/2203.06605)] &emsp; [[Project Page](https://harlanhong.github.io/publications/dagan.html)] &emsp; [Demo] <br>
