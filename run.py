@@ -52,20 +52,20 @@ with torch.autograd.set_detect_anomaly(True):
         parser.add_argument("--verbose", dest="verbose", action="store_true", help="Print model architecture")
         parser.add_argument("--local_rank", type=int)
         parser.add_argument("--use_depth",action='store_true',help='depth mode')
-        parser.add_argument("--rgbd",action='store_true',help='depth mode')
-        parser.add_argument("--kp_prior",action='store_true',help='depth mode')
+        parser.add_argument("--rgbd",action='store_true',help='rgbd mode')
+        parser.add_argument("--kp_prior",action='store_true',help='use kp_prior in final objective function')
 
         # alter model
-        parser.add_argument("--generator",required=True,help='depth mode')
-        parser.add_argument("--kp_detector",default='KPDetector',type=str,help='depth mode')
-        parser.add_argument("--GFM",default='GeneratorFullModel')
+        parser.add_argument("--generator",required=True,help='the type of genertor')
+        parser.add_argument("--kp_detector",default='KPDetector',type=str,help='the type of KPDetector')
+        parser.add_argument("--GFM",default='GeneratorFullModel',help='the type of GeneratorFullModel')
         
-        parser.add_argument("--batchsize",type=int, default=-1,help='depth mode')
-        parser.add_argument("--kp_num",type=int, default=-1,help='depth mode')
-        parser.add_argument("--kp_distance",type=int, default=10,help='depth mode')
-        parser.add_argument("--depth_constraint",type=int, default=0,help='depth mode')
+        parser.add_argument("--batchsize",type=int, default=-1,help='user defined batchsize')
+        parser.add_argument("--kp_num",type=int, default=-1,help='user defined keypoint number')
+        parser.add_argument("--kp_distance",type=int, default=10,help='the weight of kp_distance loss')
+        parser.add_argument("--depth_constraint",type=int, default=0,help='the weight of depth_constraint loss')
 
-        parser.add_argument("--name",type=str)
+        parser.add_argument("--name",type=str,help='user defined model saved name')
 
         parser.set_defaults(verbose=False)
         opt = parser.parse_args()
