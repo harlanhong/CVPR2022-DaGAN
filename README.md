@@ -28,7 +28,7 @@ https://user-images.githubusercontent.com/19970321/162151327-f2930231-42e3-40f2-
 
 ## :wrench: Dependencies and Installation
 
-- Python >= 3.7 (Recommend to use [Anaconda](https://www.anaconda.com/download/#linux) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html))
+<!-- - Python >= 3.7 (Recommend to use [Anaconda](https://www.anaconda.com/download/#linux) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html)) -->
 - [PyTorch >= 1.7](https://pytorch.org/)
 - Option: NVIDIA GPU + [CUDA](https://developer.nvidia.com/cuda-downloads)
 - Option: Linux
