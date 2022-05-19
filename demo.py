@@ -41,7 +41,7 @@ def load_checkpoints(config_path, checkpoint_path, cpu=False):
         checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
     else:
         checkpoint = torch.load(checkpoint_path,map_location="cuda:0")
-    
+        
     ckp_generator = OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['generator'].items())
     generator.load_state_dict(ckp_generator)
     ckp_kp_detector = OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['kp_detector'].items())
