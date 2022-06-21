@@ -36,7 +36,6 @@ def load_checkpoints(config_path, checkpoint_path, cpu=False):
                              **config['model_params']['common_params'])
     if not cpu:
         kp_detector.cuda()
-    
     if cpu:
         checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
     else:
@@ -164,8 +163,8 @@ if __name__ == "__main__":
 
     depth_encoder = depth.ResnetEncoder(18, False)
     depth_decoder = depth.DepthDecoder(num_ch_enc=depth_encoder.num_ch_enc, scales=range(4))
-    loaded_dict_enc = torch.load('/data/fhongac/workspace/src/DaGAN/depth/models/weights_19/encoder.pth')
-    loaded_dict_dec = torch.load('/data/fhongac/workspace/src/DaGAN/depth/models/weights_19/depth.pth')
+    loaded_dict_enc = torch.load('/data/fhongac/workspace/src/CVPR22_DaGAN/depth/models/depth_face_model_Voxceleb2_10w/encoder.pth')
+    loaded_dict_dec = torch.load('/data/fhongac/workspace/src/CVPR22_DaGAN/depth/models/depth_face_model_Voxceleb2_10w/depth.pth')
     filtered_dict_enc = {k: v for k, v in loaded_dict_enc.items() if k in depth_encoder.state_dict()}
     depth_encoder.load_state_dict(filtered_dict_enc)
     depth_decoder.load_state_dict(loaded_dict_dec)
@@ -205,6 +204,7 @@ if __name__ == "__main__":
     else:
         # predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
         sources, drivings, predictions,depth_gray = make_animation(source_image, driving_video, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
+    imageio.mimsave('demo.mp4', [img_as_ubyte(p) for p in predictions], fps=fps)
     imageio.mimsave(opt.result_video, [np.concatenate((img_as_ubyte(s),img_as_ubyte(d),img_as_ubyte(p)),1) for (s,d,p) in zip(sources, drivings, predictions)], fps=fps)
     imageio.mimsave("gray.mp4", depth_gray, fps=fps)
     # merge the gray video
