@@ -237,8 +237,8 @@ def aus(path):
     out1.plot_aus(12, muscles={'all': "heatmap"}, gaze = None)
     plt.savefig('a.jpg')
     out2 = detector.detect_image('FID/source/1.jpg')
-    p1 = out1.facepose().values
-    p2 = out2.facepose().values
+    p1 = out1.facepose.values
+    p2 = out2.facepose.values
     
     # landmarks = detector.detect_landmarks(frame, face)  
     # score = detector.detect_aus(frame,landmarks[0])
@@ -278,8 +278,8 @@ def evaluate_PRMSE_AUCON():
 
             out_gt = detector.detect_image(gt)
             out_generat = detector.detect_image(gen)
-            gt_pose = out_gt.facepose().values
-            generate_pose = out_generat.facepose().values
+            gt_pose = out_gt.facepose.values
+            generate_pose = out_generat.facepose.values
             gt_aus = out_gt.aus().values
             generate_aus = out_generat.aus().values
             row,num = generate_aus.shape
