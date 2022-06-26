@@ -22,6 +22,7 @@ https://user-images.githubusercontent.com/19970321/162151327-f2930231-42e3-40f2-
 
 
 :triangular_flag_on_post: **Updates** 
+- :fire::fire::white_check_mark: June 26, 2022: The repo of our face depth network is released, please refer to [Face-Depth-Network](https://github.com/harlanhong/Face-Depth-Network) and feel free to email me if you meet any problem.
 - :fire::fire::white_check_mark: June 21, 2022: [Digression] I am looking for research intern/research assistant opportunities in European next year. Please contact me If you think I'm qualified for your position.
 - :fire::fire::white_check_mark: May 19, 2022: The depth face model (50 layers) trained on Voxceleb2 is released! (The corresponding checkpoint of DaGAN will release soon). Click the [LINK](https://hkustconnect-my.sharepoint.com/:f:/g/personal/fhongac_connect_ust_hk/EkxzfH7zbGJNr-WVmPU6fcABWAMq_WJoExAl4SttKK6hBQ?e=fbtGlX)
 
