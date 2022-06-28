@@ -28,9 +28,9 @@ sklearn==0.0
 tensorboard==1.15.0
 threadpoolctl==3.1.0
 tifffile==2021.11.2
-torch @ file:///data/fhongac/workspace/src/CVPR22_DaGAN/torch-1.9.0%2Bcu111-cp37-cp37m-linux_x86_64.whl
+torch
 torchaudio==0.10.1+rocm4.1
-torchvision @ file:///data/fhongac/workspace/src/CVPR22_DaGAN/torchvision-0.10.0%2Bcu111-cp37-cp37m-linux_x86_64.whl
+torchvision
 tqdm==4.64.0
 typing_extensions==4.2.0
 Werkzeug==2.1.1
