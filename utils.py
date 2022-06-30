@@ -280,8 +280,8 @@ def evaluate_PRMSE_AUCON():
             out_generat = detector.detect_image(gen)
             gt_pose = out_gt.facepose.values
             generate_pose = out_generat.facepose.values
-            gt_aus = out_gt.aus().values
-            generate_aus = out_generat.aus().values
+            gt_aus = out_gt.aus.values
+            generate_aus = out_generat.aus.values
             row,num = generate_aus.shape
             prmse=np.sqrt(np.power(gt_pose-generate_pose,2).sum()/3)
             if math.isnan(prmse):
