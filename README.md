@@ -98,7 +98,6 @@ Checkpoints will be saved to this folder.
 To check the loss values during training see ```log.txt```.
 By default the batch size is tunned to run on 8 GeForce RTX 3090 gpu (You can obtain the best performance after about 150 epochs). You can change the batch size in the train_params in ```.yaml``` file.
 
-:triangular_flag_on_post: Please use multiple GPUs to train your own model, if you use only one GPU, you would meet the inplace problem.
 
 Also, you can watch the training loss by running the following command:
 ```bash
