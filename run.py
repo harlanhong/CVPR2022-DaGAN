@@ -123,9 +123,9 @@ with torch.autograd.set_detect_anomaly(True):
             print(kp_detector)
         kp_detector= torch.nn.SyncBatchNorm.convert_sync_batchnorm(kp_detector)
 
-        kp_detector = DDP(kp_detector,device_ids=[opt.local_rank])
-        discriminator = DDP(discriminator,device_ids=[opt.local_rank])
-        generator = DDP(generator,device_ids=[opt.local_rank])
+        kp_detector = DDP(kp_detector,device_ids=[opt.local_rank],broadcast_buffers=False)
+        discriminator = DDP(discriminator,device_ids=[opt.local_rank],broadcast_buffers=False)
+        generator = DDP(generator,device_ids=[opt.local_rank],broadcast_buffers=False)
 
         dataset = FramesDataset(is_train=(opt.mode == 'train'), **config['dataset_params'])
         if not os.path.exists(log_dir):
