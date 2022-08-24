@@ -142,4 +142,4 @@ We recommend the later, for each video make a separate folder with all the frame
 
 ### :e-mail: Contact
 
-If you have any question, please email `fhongac@cse.ust.hk`.
+If you have any question or cooperation need (research purpose or commercial purpose), please email `fhongac@cse.ust.hk`.
