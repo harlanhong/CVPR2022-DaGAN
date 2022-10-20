@@ -4,7 +4,7 @@
   <small>:fire: If DaGAN is helpful in your photos/projects, please help to :star: it or recommend it to your friends. Thanks:fire:</small>
 </p>
 <p align="center">
-<small>:fire: Looking forward to the cooperation (research purpose or commercial purpose). :fire:</small>
+<small>:fire: Looking forward to the collaboration (research purpose or commercial purpose). :fire:</small>
 </p>
 
 > [[Paper](https://arxiv.org/abs/2203.06605)] &emsp; [[Project Page](https://harlanhong.github.io/publications/dagan.html)] &emsp; [[Demo](https://huggingface.co/spaces/HarlanHong/DaGAN)] &emsp; [[Poster Video](https://www.youtube.com/watch?v=nahsJNjWzGo&t=1s)]<br>
@@ -23,7 +23,6 @@ https://user-images.githubusercontent.com/19970321/162151327-f2930231-42e3-40f2-
 <p align="center">
   <img src="assets/visual_vox1.png">
 </p>
-
 
 :triangular_flag_on_post: **Updates** 
 - :fire::fire::white_check_mark: July 26, 2022: The normal dataparallel training scripts were released since some researchers informed me they ran into **DistributedDataParallel** problems. Please try to train your own model using this [command](#dataparallel). Also, we deleted the command line "with torch.autograd.set_detect_anomaly(True)" to boost the training speed.
@@ -146,4 +145,4 @@ We recommend the later, for each video make a separate folder with all the frame
 
 ### :e-mail: Contact
 
-If you have any question or cooperation need (research purpose or commercial purpose), please email `fhongac@cse.ust.hk`.
+If you have any question or collaboration need (research purpose or commercial purpose), please email `fhongac@cse.ust.hk`.
