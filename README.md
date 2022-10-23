@@ -4,7 +4,7 @@
   <small>:fire: If DaGAN is helpful in your photos/projects, please help to :star: it or recommend it to your friends. Thanks:fire:</small>
 </p>
 <p align="center">
-<small>:fire: Looking forward to the collaboration (research purpose or commercial purpose). :fire:</small>
+<small>:fire: Seeking for the collaboration and intership opportunities. :fire:</small>
 </p>
 
 > [[Paper](https://arxiv.org/abs/2203.06605)] &emsp; [[Project Page](https://harlanhong.github.io/publications/dagan.html)] &emsp; [[Demo](https://huggingface.co/spaces/HarlanHong/DaGAN)] &emsp; [[Poster Video](https://www.youtube.com/watch?v=nahsJNjWzGo&t=1s)]<br>
