@@ -203,17 +203,17 @@ if __name__ == "__main__":
     else:
         # predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
         sources, drivings, predictions,depth_gray = make_animation(source_image, driving_video, generator, kp_detector, relative=opt.relative, adapt_movement_scale=opt.adapt_scale, cpu=opt.cpu)
-    imageio.mimsave('demo.mp4', [img_as_ubyte(p) for p in predictions], fps=fps)
-    imageio.mimsave(opt.result_video, [np.concatenate((img_as_ubyte(s),img_as_ubyte(d),img_as_ubyte(p)),1) for (s,d,p) in zip(sources, drivings, predictions)], fps=fps)
-    imageio.mimsave("gray.mp4", depth_gray, fps=fps)
+    imageio.mimsave(opt.result_video, [img_as_ubyte(p) for p in predictions], fps=fps)
+    # imageio.mimsave(opt.result_video, [np.concatenate((img_as_ubyte(s),img_as_ubyte(d),img_as_ubyte(p)),1) for (s,d,p) in zip(sources, drivings, predictions)], fps=fps)
+    # imageio.mimsave("gray.mp4", depth_gray, fps=fps)
     # merge the gray video
-    animation = np.array(imageio.mimread(opt.result_video,memtest=False))
-    gray = np.array(imageio.mimread("gray.mp4",memtest=False))
+    # animation = np.array(imageio.mimread(opt.result_video,memtest=False))
+    # gray = np.array(imageio.mimread("gray.mp4",memtest=False))
 
-    src_dst = animation[:,:,:512,:]
-    animate = animation[:,:,512:,:]
-    merge = np.concatenate((src_dst,gray,animate),2)
-    imageio.mimsave(opt.result_video, merge, fps=fps)
+    # src_dst = animation[:,:,:512,:]
+    # animate = animation[:,:,512:,:]
+    # merge = np.concatenate((src_dst,gray,animate),2)
+    # imageio.mimsave(opt.result_video, animate, fps=fps)
     #Transfer to gif
     # from moviepy.editor import *
     # clip = (VideoFileClip(opt.result_video))
