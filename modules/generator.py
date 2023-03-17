@@ -46,7 +46,6 @@ class SPADEGenerator(nn.Module):
         x = self.up_0(x, seg)
         x = self.up(x)                # 64, 256, 256
         x = self.up_1(x, seg)
-
         x = self.conv_img(F.leaky_relu(x, 2e-1))
         # x = torch.tanh(x)
         x = F.sigmoid(x)
