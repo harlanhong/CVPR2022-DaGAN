@@ -160,10 +160,10 @@ if __name__ == "__main__":
 
     opt = parser.parse_args()
 
-    depth_encoder = depth.ResnetEncoder(18, False)
+    depth_encoder = depth.ResnetEncoder(50, False)
     depth_decoder = depth.DepthDecoder(num_ch_enc=depth_encoder.num_ch_enc, scales=range(4))
-    loaded_dict_enc = torch.load('depth/models/weights_19/encoder.pth')
-    loaded_dict_dec = torch.load('depth/models/weights_19/depth.pth')
+    loaded_dict_enc = torch.load('depth/models/depth_face_model_Voxceleb2_10w/encoder.pth')
+    loaded_dict_dec = torch.load('depth/models/depth_face_model_Voxceleb2_10w/depth.pth')
     filtered_dict_enc = {k: v for k, v in loaded_dict_enc.items() if k in depth_encoder.state_dict()}
     depth_encoder.load_state_dict(filtered_dict_enc)
     depth_decoder.load_state_dict(loaded_dict_dec)
