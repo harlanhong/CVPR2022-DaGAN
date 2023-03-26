@@ -55,28 +55,28 @@ class Logger:
         else:
             checkpoint = torch.load(checkpoint_path,map_location='cpu')
         if generator is not None:
-            ckp_generator = collections.OrderedDict((k.replace('.module.','.'),v) for k,v in checkpoint['generator'].items())
+            ckp_generator = collections.OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['generator'].items())
             generator.load_state_dict(ckp_generator)
         if kp_detector is not None:
-            ckp_kp_detector = collections.OrderedDict((k.replace('.module.','.'),v) for k,v in checkpoint['kp_detector'].items())
+            ckp_kp_detector = collections.OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['kp_detector'].items())
             kp_detector.load_state_dict(ckp_kp_detector)
         if discriminator is not None:
             try:
-                ckp_discriminator = collections.OrderedDict((k.replace('.module.','.'),v) for k,v in checkpoint['discriminator'].items())
+                ckp_discriminator = collections.OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['discriminator'].items())
                 discriminator.load_state_dict(ckp_discriminator)
             except:
                print ('No discriminator in the state-dict. Dicriminator will be randomly initialized')
         if optimizer_generator is not None:
-            ckp_optimizer_generator = collections.OrderedDict((k.replace('.module.','.'),v) for k,v in checkpoint['optimizer_generator'].items())
+            ckp_optimizer_generator = collections.OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['optimizer_generator'].items())
             optimizer_generator.load_state_dict(ckp_optimizer_generator)
         if optimizer_discriminator is not None:
             try:
-                ckp_optimizer_discriminator = collections.OrderedDict((k.replace('.module.','.'),v) for k,v in checkpoint['optimizer_discriminator'].items())
+                ckp_optimizer_discriminator = collections.OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['optimizer_discriminator'].items())
                 optimizer_discriminator.load_state_dict(ckp_optimizer_discriminator)
             except RuntimeError as e:
                 print ('No discriminator optimizer in the state-dict. Optimizer will be not initialized')
         if optimizer_kp_detector is not None:
-            ckp_optimizer_kp_detector = collections.OrderedDict((k.replace('.module.','.'),v) for k,v in checkpoint['optimizer_kp_detector'].items())
+            ckp_optimizer_kp_detector = collections.OrderedDict((k.replace('module.',''),v) for k,v in checkpoint['optimizer_kp_detector'].items())
             optimizer_kp_detector.load_state_dict(ckp_optimizer_kp_detector)
 
         return checkpoint['epoch']
