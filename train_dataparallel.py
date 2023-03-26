@@ -54,7 +54,7 @@ def train(config, generator, discriminator, kp_detector, checkpoint, log_dir, da
         discriminator_full = DataParallelWithCallback(discriminator_full, device_ids=device_ids)
 
     with Logger(log_dir=log_dir, visualizer_params=config['visualizer_params'], checkpoint_freq=train_params['checkpoint_freq']) as logger:
-        for epoch in trange(start_epoch, train_params['num_epochs']):
+        for epoch in trange(start_epoch, start_epoch+train_params['num_epochs']):
             #parallel
             total = len(dataloader)
             epoch_train_loss = 0
