@@ -26,6 +26,7 @@ https://user-images.githubusercontent.com/19970321/162151327-f2930231-42e3-40f2-
 </p>
 
 :triangular_flag_on_post: **Updates** 
+- :fire::fire::white_check_mark: July 20 2023: Our new paper **[MCNet](https://harlanhong.github.io/publications/mcnet.html) was accpted by ICCV2023. There's no need to train a facial depth network, which makes it more convenient for users to test and fine-tune.
 - :fire::fire::white_check_mark: July 26, 2022: The normal dataparallel training scripts were released since some researchers informed me they ran into **DistributedDataParallel** problems. Please try to train your own model using this [command](#dataparallel). Also, we deleted the command line "with torch.autograd.set_detect_anomaly(True)" to boost the training speed.
 - :fire::fire::white_check_mark: June 26, 2022: The repo of our face depth network is released, please refer to [Face-Depth-Network](https://github.com/harlanhong/Face-Depth-Network) and feel free to email me if you meet any problem.
 - :fire::fire::white_check_mark: June 21, 2022: [Digression] I am looking for research intern/research assistant opportunities in European next year. Please contact me If you think I'm qualified for your position.
