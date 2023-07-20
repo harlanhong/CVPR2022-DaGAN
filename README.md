@@ -143,6 +143,13 @@ We recommend the later, for each video make a separate folder with all the frame
             journal={IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
             year={2022}
           }
+
+@inproceedings{hong2022depth,
+            title={DaGAN++: Depth-Aware Generative Adversarial Network for Talking Head Video Generation},
+            author={Hong, Fa-Ting and and Shen, Li and Xu, Dan},
+            journal={arXiv preprint arXiv:2305.06225},
+            year={2023}
+          }
 ```
 
 ### :e-mail: Contact
