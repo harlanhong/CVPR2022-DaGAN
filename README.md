@@ -147,7 +147,7 @@ We recommend the later, for each video make a separate folder with all the frame
 @inproceedings{hong2023depth,
             title={DaGAN++: Depth-Aware Generative Adversarial Network for Talking Head Video Generation},
             author={Hong, Fa-Ting and and Shen, Li and Xu, Dan},
-            journal={arXiv preprint arXiv:2305.06225},
+            journal={IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)},
             year={2023}
           }
 ```
