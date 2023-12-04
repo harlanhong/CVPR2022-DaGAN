@@ -144,7 +144,7 @@ We recommend the later, for each video make a separate folder with all the frame
             year={2022}
           }
 
-@inproceedings{hong2023dagan,
+@article{hong2023dagan,
             title={DaGAN++: Depth-Aware Generative Adversarial Network for Talking Head Video Generation},
             author={Hong, Fa-Ting and and Shen, Li and Xu, Dan},
             journal={IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)},
